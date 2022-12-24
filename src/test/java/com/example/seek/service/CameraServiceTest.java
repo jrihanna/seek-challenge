@@ -8,12 +8,15 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import com.example.seek.domain.Traffic;
 import com.example.seek.file.FileReader;
@@ -23,10 +26,8 @@ import com.example.seek.file.FileReader;
 @ExtendWith(MockitoExtension.class)
 public class CameraServiceTest {
 
-	@Autowired
 	private CameraService service;
 	
-	@InjectMocks
 	private FileReader reader;
 	
 	
@@ -35,6 +36,25 @@ public class CameraServiceTest {
 			new Traffic(LocalDateTime.parse("2021-12-01T06:00:00"), 14),
 			new Traffic(LocalDateTime.parse("2021-12-01T06:30:00"), 15),
 			new Traffic(LocalDateTime.parse("2021-12-09T00:00:00"), 4));
+	
+	@BeforeEach
+	void init() {
+		service = new CameraService();
+		reader = new FileReader();
+	}
+	
+	@Test
+	void all_methods_should_be_called() {
+		service = Mockito.spy(CameraService.class);
+		ReflectionTestUtils.setField(service, "reader", reader);
+		Mockito.when(service.readFile()).thenReturn(TRAFFICS);
+
+		service.calculateAll();
+		Mockito.verify(service, Mockito.times(1)).calculateTotal(TRAFFICS);
+		Mockito.verify(service, Mockito.times(1)).calculateTotalPerDay(TRAFFICS);
+		Mockito.verify(service, Mockito.times(1)).calculateTopThree(TRAFFICS);
+		Mockito.verify(service, Mockito.times(1)).calculateMin(TRAFFICS);
+	}
 	
 	@Test
 	void throw_exception_file_not_found() {
