@@ -1,8 +1,6 @@
 package com.example.seek.domain;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Map;
 
 public class Traffic implements Comparable<Traffic> {
 
