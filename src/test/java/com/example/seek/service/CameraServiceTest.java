@@ -8,8 +8,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -22,6 +24,7 @@ import com.example.seek.file.FileReader;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
+@TestInstance(Lifecycle.PER_CLASS)
 public class CameraServiceTest {
 
 	private CameraService service;
@@ -35,7 +38,7 @@ public class CameraServiceTest {
 			new Traffic(LocalDateTime.parse("2021-12-01T06:30:00"), 15),
 			new Traffic(LocalDateTime.parse("2021-12-09T00:00:00"), 4));
 	
-	@BeforeEach
+	@BeforeAll
 	void init() {
 		service = new CameraService();
 		reader = new FileReader();
