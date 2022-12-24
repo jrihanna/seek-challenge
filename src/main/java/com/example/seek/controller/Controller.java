@@ -16,7 +16,7 @@ public class Controller {
 	
 	@GetMapping("/parser")
 	@ResponseBody
-    public Response calculateTotalPerDay() {
+    public Response calculate() {
         return service.calculateAll();
     }
 }
