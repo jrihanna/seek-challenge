@@ -13,7 +13,7 @@ public class Response {
 	
 	private List<Traffic> mostCars;
 	
-	private Traffic leastCars;
+	private String leastCars;
 	
 
 	public int getTotal() {
@@ -32,11 +32,11 @@ public class Response {
 		this.mostCars = mostCars;
 	}
 
-	public Traffic getLeastCars() {
+	public String getLeastCars() {
 		return leastCars;
 	}
 
-	public void setLeastCars(Traffic leastCars) {
+	public void setLeastCars(String leastCars) {
 		this.leastCars = leastCars;
 	}
 

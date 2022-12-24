@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.stereotype.Component;
 
 import com.example.seek.domain.Traffic;
@@ -37,6 +39,11 @@ public class FileReader {
 	
 	private InputStream readFile(String source) {
 	    InputStream inputStream = getClass().getResourceAsStream(source);
+	    
+	    if(inputStream == null) {
+	    	throw new RuntimeException("File Not Found");
+	    }
+	    	
 		return inputStream;
 	}
 
